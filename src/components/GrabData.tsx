@@ -1,4 +1,4 @@
-import Image from 'next/image';
+// import Image from 'next/image';
 import puppeteer from 'puppeteer';
 
 interface GrabDataProps {
@@ -25,6 +25,7 @@ export default async function GrabData(prop: GrabDataProps) {
     await page.click(".bbc-1wfjd8u");
 
     const bbcData = await page.evaluate(() => {
+        const headline: any = document.querySelector(".bbc-14gqcmb")?.innerText;
         const allImagesDiv: any = Array.from(document.querySelectorAll(".bbc-fa0wmp .bbc-1qn0xuy"));
         const allImages = allImagesDiv.map((item: any) => {
             const img = item.querySelector(":scope > div > picture > img");
@@ -33,7 +34,7 @@ export default async function GrabData(prop: GrabDataProps) {
             const urlBegin: string = "https://ichef.bbci.co.uk/news/800";
             const urlEnd: string = imgSrc.slice(urlBegin.length);
             const urlFinal: string = urlBegin + urlEnd;
-            return { urlFinal, credit };
+            return { urlFinal, credit, headline };
         })
 
         return allImages;
@@ -42,11 +43,26 @@ export default async function GrabData(prop: GrabDataProps) {
 
     console.log(bbcData)
 
+    const bodyCredits = bbcData.map((item: any, index: any) => {
+        const thisPhoto = 1 + index;
+        return (`${thisPhoto}. ${item.credit}%0D%0A`)
+    });
+
+    const bodyNoCommas = bodyCredits.toString().replaceAll(",", "");
+
+    const bodyEmail = "Credito das fotos:%0D%0A" + bodyNoCommas;
+
+    const urlString = url.toString() + "%0D%0A%0D%0A%0D%0A"
+
+    const email = "mailto:daniel.gallas@bbc.co.uk?subject=BBC News Brasil: " + bbcData[0].headline + "&body=" + urlString + bodyEmail;
+
     return (
         <div className='p-1'>
-            <p className='mb-7'>URL: <a href={url}>{url}</a></p>
-            <p className='font-bold'>Crédito das fotos:</p>
-            {bbcData.map((item: any, index: number) => { return (<p key={index}>{index + 1 + ". " + item.credit}</p>) })}
+            <p className='mb-7'><a href={email}>Click me to e-mail</a></p>
+            {/* <p className='mb-7'>URL: <a href={url}>{url}</a></p> */}
+            {/* <p className='font-bold'>Crédito das fotos:</p> */}
+            {/* {bodyCredits} */}
+            {/* {bbcData.map((item: any, index: number) => { return (<p key={index}>{index + 1 + ". " + item.credit}</p>) })} */}
             {bbcData.map((item: any, index: number) => {
                 return (
                     <p className='mt-3' key={index}><img src={item.urlFinal} alt={item.credit} /></p>)
