@@ -10,7 +10,6 @@ export default async function GrabData() {
     });
 
     const url = "https://www.bbc.com/portuguese/articles/cgelrdknqwlo";
-    const url2 = "https://books.toscrape.com"
 
     const page = await browser.newPage();
     await page.goto(url, {
@@ -21,10 +20,10 @@ export default async function GrabData() {
     await page.click(".bbc-1wfjd8u");
 
     const bbcData = await page.evaluate(() => {
-        const allImagesDiv: any = Array.from(document.querySelectorAll(".bbc-sni631"));
+        const allImagesDiv: any = Array.from(document.querySelectorAll(".bbc-fa0wmp .bbc-1qn0xuy"));
         const allImages = allImagesDiv.map((item: any) => {
-            const img = item.querySelector(":scope > picture > img");
-            const credit: any = item.querySelector(":scope > p > span:nth-child(2)")?.innerText;
+            const img = item.querySelector(":scope > div > picture > img");
+            const credit: any = item.querySelector(":scope > div > p > span:nth-child(2)")?.innerText || "BBC";
             const imgSrc = img.getAttribute("src");
             const urlBegin: string = "https://ichef.bbci.co.uk/news/800";
             const urlEnd: string = imgSrc.slice(urlBegin.length);
