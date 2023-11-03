@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import GrabData from "./GrabData";
+// import GrabData from "./GrabData";
 
 
 export default function SubmitButton() {
@@ -20,7 +20,7 @@ export default function SubmitButton() {
             <form>
                 <input name='siteUrl' placeholder='Enter the URL here' onChange={(e) => setUrl(e.target.value)} />
                 <button type="submit" onClick={handleSubmit}>Submit</button>
-                {showUrl && <GrabData />}
+                {/* {showUrl && <GrabData />} */}
             </form>
         </div>
     )

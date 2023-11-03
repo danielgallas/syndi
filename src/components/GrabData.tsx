@@ -1,15 +1,20 @@
+import Image from 'next/image';
 import puppeteer from 'puppeteer';
 
-export default async function GrabData() {
+interface GrabDataProps {
+    urlInput: string;
+}
+
+export default async function GrabData(prop: GrabDataProps) {
 
     const browser = await puppeteer.launch({
-        headless: false,
+        headless: "new",
         // `headless: true` (default) enables old Headless;
         // `headless: 'new'` enables new Headless;
         // `headless: false` enables “headful” mode.
     });
 
-    const url = "https://www.bbc.com/portuguese/articles/cgelrdknqwlo";
+    const url = prop.urlInput;
 
     const page = await browser.newPage();
     await page.goto(url, {
@@ -31,51 +36,22 @@ export default async function GrabData() {
             return { urlFinal, credit };
         })
 
-        // const imageDivs = Array.from(document.querySelectorAll(".bbc-sni631")?.innerHTML);
         return allImages;
     })
     await browser.close();
 
     console.log(bbcData)
 
-    // const bookData = await page.evaluate((url) => {
-    //     const bookPods = Array.from(document.querySelectorAll(".product_pod"));
-    //     const data = bookPods.map((book: any) => ({
-    //         title: book.querySelector("h3 a").getAttribute("title"),
-    //         price: book.querySelector(".price_color").innerText,
-    //         imgSrc: url + book.querySelector("img").getAttribute("src"),
-    //     }))
-    //     return data
-    // }, url)
-
-    // console.log(bookData);
-
-    // await page.click(".bbc-1wfjd8u");
-    // await page.click(".bbc-1wfjd8u");
-
-    // const imageUrl = await page.evaluate(() => {
-    //     const segment = document.querySelector(".bbc-sni631");
-    //     const image = segment?.getAttribute("img");
-    //     // const image = document.querySelector('img');
-    //     return image;
-    // });
-
-    // console.log(imageUrl)
-
-    // const getInfo = await page.evaluate(() => {
-    //     const headline = document.querySelector(".bbc-14gqcmb")?.innerHTML;
-
-    //     console.log(headline)
-
-
-    //     return { headline }
-    // })
-
-    // console.log(getInfo)
-
-    // …
-
-
-    return <div>Grabbed it!</div>
+    return (
+        <div className='p-1'>
+            <p className='mb-7'>URL: <a href={url}>{url}</a></p>
+            <p className='font-bold'>Crédito das fotos:</p>
+            {bbcData.map((item: any, index: number) => { return (<p key={index}>{index + 1 + ". " + item.credit}</p>) })}
+            {bbcData.map((item: any, index: number) => {
+                return (
+                    <p className='mt-3' key={index}><img src={item.urlFinal} alt={item.credit} /></p>)
+            })}
+        </div>
+    )
 
 }
