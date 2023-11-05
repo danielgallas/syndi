@@ -1,27 +1,14 @@
 "use client";
+import { ComponentProps } from "react";
 
-import { useState } from "react";
-// import GrabData from "./GrabData";
-
-
-export default function SubmitButton() {
-
-    const [url, setUrl] = useState("");
-    const [showUrl, setShowUrl] = useState(false);
+type SubmitButtonProps = {
+    children: React.ReactNode,
+} & ComponentProps<"button">;
 
 
-    function handleSubmit(event: any) {
-        event.preventDefault();
-        setShowUrl(true);
-    }
+export default function SubmitButton({ children, ...props }: SubmitButtonProps) {
 
     return (
-        <div>
-            <form>
-                <input name='siteUrl' placeholder='Enter the URL here' onChange={(e) => setUrl(e.target.value)} />
-                <button type="submit" onClick={handleSubmit}>Submit</button>
-                {/* {showUrl && <GrabData />} */}
-            </form>
-        </div>
+        <button {...props} type="submit">{children}</button>
     )
 }

@@ -1,3 +1,5 @@
+"use server";
+
 // import Image from 'next/image';
 import puppeteer from 'puppeteer';
 
@@ -25,7 +27,7 @@ export default async function GrabData(prop: GrabDataProps) {
     await page.click(".bbc-1wfjd8u");
 
     const bbcData = await page.evaluate(() => {
-        const headline: any = document.querySelector(".bbc-14gqcmb")?.innerText;
+        const headline: any = document.querySelector(".bbc-14gqcmb")?.textContent;
         const allImagesDiv: any = Array.from(document.querySelectorAll(".bbc-fa0wmp .bbc-1qn0xuy"));
         const allImages = allImagesDiv.map((item: any) => {
             const img = item.querySelector(":scope > div > picture > img");
@@ -54,7 +56,7 @@ export default async function GrabData(prop: GrabDataProps) {
 
     const urlString = url.toString() + "%0D%0A%0D%0A%0D%0A"
 
-    const email = "mailto:daniel.gallas@bbc.co.uk?subject=BBC News Brasil: " + bbcData[0].headline + "&body=" + urlString + bodyEmail;
+    const email = "mailto:d@d.co.uk?subject=BBC News Brasil: " + bbcData[0].headline + "&body=" + urlString + bodyEmail;
 
     return (
         <div className='p-1'>

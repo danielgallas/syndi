@@ -1,28 +1,29 @@
-// "use client";
-
 import GrabData from "@/components/GrabData";
-import { useState } from "react";
+import SubmitButton from "@/components/SubmitButton";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+
+let url2: string = "https://www.bbc.com/portuguese/articles/crgp02rn077o";
 
 export default function Home() {
 
-  // const [url, setUrl] = useState();
-  // const [submit, setSubmit] = useState(false);
+  async function getUrl(formData: FormData) {
+    "use server";
+    url2 = formData.get("siteUrl")?.toString() || "";
+    if (url2) {
+      redirect("/display?query=" + url2)
+    }
+  }
 
-  const url = "https://www.bbc.com/portuguese/articles/c6p63548ye1o"
 
   return (
     <main className="flex min-h-screen flex-col items-center p-24 bg-amber-100">
       <div>
-        {/* <form>
-          <input name='siteUrl' placeholder='Enter the URL here' onChange={(e) => setUrl(e.target.value)} />
-          <button type="submit" onClick={setSubmit(true)}>Submit</button>
-        </form> */}
-        <GrabData urlInput={url} />
+        <form action={getUrl}>
+          <input name='siteUrl' placeholder='Enter the URL here' />
+          <SubmitButton>Grab it man!</SubmitButton>
+        </form>
       </div>
-
-      {/* <h1 className='font-black'>Syndi it!</h1> */}
-      {/* <GetQuotes /> */}
-
     </main>
   )
 }
