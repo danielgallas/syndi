@@ -31,7 +31,7 @@ export default async function GrabData(prop: GrabDataProps) {
         const allImagesDiv: any = Array.from(document.querySelectorAll(".bbc-fa0wmp .bbc-1qn0xuy"));
         const allImages = allImagesDiv.map((item: any) => {
             const img = item.querySelector(":scope > div > picture > img");
-            const credit: any = item.querySelector(":scope > div > p > span:nth-child(2)")?.innerText || "BBC";
+            const credit: any = item.querySelector(":scope > div > p > span:nth-child(2)")?.textContent || "BBC";
             const imgSrc = img.getAttribute("src");
             const urlBegin: string = "https://ichef.bbci.co.uk/news/800";
             const urlEnd: string = imgSrc.slice(urlBegin.length);
