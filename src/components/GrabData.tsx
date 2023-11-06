@@ -60,9 +60,11 @@ export default async function GrabData(prop: GrabDataProps) {
 
     const urlString = url.toString() + "%0D%0A%0D%0A%0D%0A"
 
+    const myEmail = process.env.MY_EMAIL;
+
     const bccEmails = process.env.BCC_EMAILS;
 
-    const email = "mailto:daniel.gallas@bbc.co.uk?subject=BBC News Brasil: " + bbcData[0].headline + "&BCC=" + bccEmails + "&body=" + urlString + bodyEmail;
+    const email = "mailto:" + myEmail + "?subject=BBC News Brasil: " + bbcData[0].headline + "&BCC=" + bccEmails + "&body=" + urlString + bodyEmail;
 
     return (
         <div className='p-1'>
