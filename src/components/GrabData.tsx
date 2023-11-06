@@ -8,12 +8,17 @@ interface GrabDataProps {
 
 export default async function GrabData(prop: GrabDataProps) {
 
-    const browser = await puppeteer.launch({
-        headless: "new",
-        // `headless: true` (default) enables old Headless;
-        // `headless: 'new'` enables new Headless;
-        // `headless: false` enables “headful” mode.
-    });
+    const browser = await puppeteer.connect({
+        browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BLESS_TOKEN}`,
+    })
+
+
+    // const browser = await puppeteer.launch({
+    //     headless: "new",
+    //     // `headless: true` (default) enables old Headless;
+    //     // `headless: 'new'` enables new Headless;
+    //     // `headless: false` enables “headful” mode.
+    // });
 
     const url = prop.urlInput;
 
