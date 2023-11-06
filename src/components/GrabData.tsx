@@ -1,7 +1,6 @@
 "use server";
+import puppeteer from 'puppeteer-core';
 
-// import Image from 'next/image';
-import puppeteer from 'puppeteer';
 
 interface GrabDataProps {
     urlInput: string;
