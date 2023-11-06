@@ -47,7 +47,7 @@ export default async function GrabPhoto(prop: GrabPhotoProps) {
         <div className='p-1'>
             {bbcData.map((item: any, index: number) => {
                 return (
-                    <p className='mt-3' key={index}><img src={item.urlFinal} alt={item.credit} /></p>)
+                    <p className='mt-3' key={index}><img src={item.urlFinal} alt={item.credit} /><br></br><br></br></p>)
             })}
         </div>
     )
