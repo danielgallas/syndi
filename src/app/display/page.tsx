@@ -1,6 +1,5 @@
 
 import puppeteer from "puppeteer";
-import SendEmail from "@/components/SendEmail";
 
 interface DisplayProps {
     searchParams: { query: string }
@@ -64,9 +63,11 @@ export default async function Display({ searchParams: { query } }: DisplayProps)
     const email = "mailto:" + myEmail + "?subject=BBC News Brasil: " + bbcData[0].headline + "&BCC=" + bccEmails + "&body=" + urlString + bodyEmail;
 
     return (
-        <main className="flex min-h-screen flex-col items-center p-24">
-            <div>
-                <SendEmail data={email} newData={bbcDataJson} />
+        <main className="flex flex-col items-center p-24">
+            <h1 className="text-4xl font-extrabold">Syndi</h1>
+            <div className="w-4/5 p-4 m-4">
+                <div className='p-4 m-3 btn btn-primary'><a href={email}>Click me to e-mail</a></div>
+                <div className='p-4 m-3 btn btn-primary'><a href={"/display/photos?query=" + bbcDataJson}>Just photos</a></div>
             </div>
         </main>
     )

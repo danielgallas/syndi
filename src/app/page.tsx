@@ -1,27 +1,26 @@
-import GrabData from "@/components/GrabData";
 import SubmitButton from "@/components/SubmitButton";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
-let url2: string = "https://www.bbc.com/portuguese/articles/crgp02rn077o";
+let url: string = "https://www.bbc.com/portuguese/articles/crgp02rn077o";
 
 export default function Home() {
 
   async function getUrl(formData: FormData) {
     "use server";
-    url2 = formData.get("siteUrl")?.toString() || "";
-    if (url2) {
-      redirect("/display?query=" + url2)
+    url = formData.get("siteUrl")?.toString() || "";
+    if (url) {
+      redirect("/display?query=" + url)
     }
   }
 
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-24 bg-amber-100">
-      <div>
+    <main className="flex flex-col items-center p-24">
+      <h1 className="text-4xl font-extrabold">Syndi</h1>
+      <div className="w-4/5 p-4">
         <form action={getUrl}>
-          <input name='siteUrl' placeholder='Enter the URL here' />
-          <SubmitButton>Grab it man!</SubmitButton>
+          <input name='siteUrl' placeholder='Enter the URL here' className="input input-bordered w-4/5 m-8" />
+          <SubmitButton className="btn btn-primary">Grab photos</SubmitButton>
         </form>
       </div>
     </main>
