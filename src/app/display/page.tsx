@@ -1,8 +1,6 @@
-// NEW DEPLOYMENT
-// import GrabData from "@/components/GrabData";
+
 import puppeteer from "puppeteer";
 import SendEmail from "@/components/SendEmail";
-// import ShowPhotos from "@/components/ShowPhotos";
 
 interface DisplayProps {
     searchParams: { query: string }
@@ -49,7 +47,8 @@ export default async function Display({ searchParams: { query } }: DisplayProps)
     })
     await browser.close();
 
-    console.log(bbcData)
+    const bbcDataJson = JSON.stringify(bbcData.map((item: any) => item.urlFinal))
+    console.log(bbcDataJson)
 
     const bodyCredits = bbcData.map((item: any, index: any) => {
         const thisPhoto = 1 + index;
@@ -67,8 +66,7 @@ export default async function Display({ searchParams: { query } }: DisplayProps)
     return (
         <main className="flex min-h-screen flex-col items-center p-24">
             <div>
-                <SendEmail data={email} url={url} />
-                {/* <ShowPhotos data={bbcData} /> */}
+                <SendEmail data={email} newData={bbcDataJson} />
             </div>
         </main>
     )

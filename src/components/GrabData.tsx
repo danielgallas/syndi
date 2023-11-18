@@ -66,6 +66,8 @@ export default async function GrabData(prop: GrabDataProps) {
 
     const email = "mailto:" + myEmail + "?subject=BBC News Brasil: " + bbcData[0].headline + "&BCC=" + bccEmails + "&body=" + urlString + bodyEmail;
 
+    localStorage.setItem("testing", "DANIELAO");
+
     return (
         <div className='p-1'>
             {/* {bbcData.map((item: any, index: number) => {
