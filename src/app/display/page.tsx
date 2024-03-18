@@ -36,7 +36,7 @@ export default async function Display({ searchParams: { query } }: DisplayProps)
             const img = item.querySelector(":scope > div > picture > img");
             const credit: any = item.querySelector(":scope > div > p > span:nth-child(2)")?.textContent || "BBC";
             const imgSrc = img.getAttribute("src");
-            const urlBegin: string = "https://ichef.bbci.co.uk/news/800";
+            const urlBegin: string = "https://ichef.bbci.co.uk/ace/ws/800";
             const urlEnd: string = imgSrc.slice(urlBegin.length);
             const urlFinal: string = urlBegin + urlEnd;
             return { urlFinal, credit, headline };
